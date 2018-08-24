@@ -11,6 +11,15 @@ which is BigData？
 
 Hadoop
     storage and analysis at internet scale
+    起源：
+    Apache Lucene
+        开源的高性能全文搜索工具包
+    Apache Nutch
+        开源的Web搜索引擎
+    Google三大论文
+        MapReduce/GFS/BigTable
+    Apache Hadoop
+
 
 Common
     工具，基础，为其他几个模块服务
