@@ -8,3 +8,30 @@ which is BigData？
 
 达芬奇密码
 
+
+Hadoop
+    storage and analysis at internet scale
+
+Common
+    工具，基础，为其他几个模块服务
+
+MapReduce
+    对海量数据处理
+    分布式
+    思想
+        分而治之
+        大数据集分为小的数据集
+        每个数据集，进行逻辑业务处理(map)
+        合并统计数据结构(reduce)
+
+HDFS
+    存储海量数据
+    分布式
+    安全性
+        副本数据
+
+YARN
+    分布式资源管理框架
+    管理整个集群的资源(CPU核数，内存)
+    分配调度集群资源
+

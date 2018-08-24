@@ -132,5 +132,3 @@ HDFS常用命令：
     hadoop fs -copyFromLocal  本地目录 路径   本地源文件复制到系统中去
 
     http://[NameNodeIP]:50070 访问HDFS文件
-
-
