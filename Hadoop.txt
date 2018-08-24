@@ -1,0 +1,136 @@
+Hadoop
+Apache旗下开源，java开发，跨平台
+核心：分布式文件系统HDFS和MapReduce，即海量数据存储和计算
+
+MapReduce:
+1.从磁盘或网络读取数据，即IO密集工作
+2.计算数据，CPU密集工作
+
+pache hadoop分两代
+第一代：0.20.x,0.21.x,0.22.x后1.0.x
+第二代：0.23.x和2.x
+
+Hadoop2 由HDFS,MapReduce,YARN,Others组成。MR用于计算，不调度了
+HDFS:NN Feberation,HA(高可用性)组成
+
+企业版本
+Hortonworks
+Cloudera
+MapR
+...
+
+开源，稳定性，实践检验，社区支持
+
+Ubuntu轻量级，CentOS重量级
+
+Hadoop集群整体性能取决于CPU,内存，网络以及存储之间的性能平衡。
+Hadoop集群中节点主要有：
+    NameNode:负责协调集群中的数据存储
+    DateNode:存储被拆分的数据块
+    JobTracker:协调数据计算任务
+    TaskTracker:负责执行由JobTracker指派的任务
+    SecondaryNameNode:帮助NameNode收集文件系统的运行状态
+
+
+HDFS目标：
+    兼容廉价硬件设备
+    流数据读写
+    大数据集
+    简单的文件模型
+    强大的跨平台兼容性
+HDFS局限性：
+    不适合低延迟数据访问
+    无法高效存储大量小文件
+    不支持多用户写入及任意修改文件(只允许追加，不允许修改)
+
+块：
+HDFS默认一个块64MB，一个文件分成多个块，已块为存储单位
+块大小远远大于普通文件系统，可以最小化寻址开销
+HDFS采用块概念好处：
+    支持大规模文件存储
+    简化系统设计
+    适合数据备份
+
+
+元数据metadata
+    File.txt=
+        A:
+        DN1.DN 6
+        B:
+        DN7,DN2
+
+NameNode：
+    存储元数据
+    元数据保存在内存中
+    保存文件，block,dataNode之间的映射关系
+DataNode
+    存储文件内容
+    文件内容保存在磁盘
+    维护了bolck id到dataNode本地文件的映射
+
+NameNode的数据结构：
+    管理分布式文件系统的Namespace,保存2个核心数据结构：FsImage和EditLog
+
+    FsImage:维护文件系统树以及文件树中所有文件和文件夹的元数据
+        FsImage没有记录块存储在哪个哪个数据节点，NameNode会把映射保存在内存中，实时维护块映射
+    EditLog:记录文件的创建，删除和重命名
+
+NameNode启动：
+    启动时，将FsImage文件中的内容加载到内存中,再执行EditLog文件的各项操作，使内存中的元数据和实际的同步，存在内存中的元数据支持客户端的读操作
+    一旦内存成功创建文件系统的元数据映射，会创建一个新的FsImage和一个空的EditLog
+
+EditLog不断增大问题，用SecondaryNameNode(冷备份)解决
+
+SecondaryNameNode：
+    1.定期与NameNode通信，请求停止EditLog，将新的写操作写到一个新的文件edit.new上来,操作瞬间完成
+    2.通过Http GET方式从NameNode上获取到FsImage和EditLog文件，并下载到本地文件中
+    3.
+    4.
+    5.
+
+DateNode
+    负责数据的存储和读取
+    每个数据节点的数据会保存到各自的本地Linux文件系统中
+
+
+HDFS采用主从(Master/Slave)结构模型， 一个HDFS集群保存一个NameNode和若干个DataNode
+
+HDFS的NameSpace包括目录，文件，块
+HDFS1.0只有一个NameSpace
+
+所有HDFS通信是TCP/IP
+客户端和DataNode的交互是通过RPC(Remote Procedure Call）远程过程调用 来实现的，NameNode响应RPC请求
+
+HDFS的局限性：
+1. 命名空间的限制
+2. 性能的瓶颈
+3. 隔离问题
+4. 集群的可用性
+
+分布式文件系统常见问题：
+    冗余数据的保存
+    数据存储策略
+    数据错误和恢复
+HDFS怎么解决的：
+    1.冗余存储（多副本方式）
+    2.数据存放（多副本）
+    3.数据读取（提供API确定数据节点所属机架ID）优先找数据块机架ID相同的副本
+    4.NameNode出错，备份机制（SecondaryNameNode）
+    5.DataNode出错。每个节点定期向NameNode发出心跳信息
+    6.数据出错（如网络传输和磁盘错误等）客户端读取数据后悔采用md5和sha1多数据进行校验
+
+HDFS源码：
+    FileSystem 通用文件系统抽象基类
+    DistributedFileSystem就是FileSystem在HDFS的具体实现
+    FileSystem的open()方法返回一个输入流FSDataInputStream,HDFS输入DFSInputStram,返回FSDataOutputStream
+    new Configuration()构造方法加载hdfs-site.xml和core-site.xml，会访问HDFS需要的参数值，如fs.defaultFS指定HDFS的地址
+
+HDFS常用命令：
+    hadoop fs -ls  路径    显示文件目录详情
+    hadoop fs -mkdir 路径   创建文件夹
+    hadoop fs -cat  路径    显示文件内容
+    hadoop fs -copyFromLocal  本地目录 路径   本地源文件复制到系统中去
+
+    http://[NameNodeIP]:50070 访问HDFS文件
+
+
