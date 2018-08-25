@@ -1,2 +1,12 @@
 Hadoop Distributed File System
 
+HDFS
+    存储海量数据
+    分布式
+    安全性
+        副本数据
+    数据以block的方式存储
+
+NameNode：存储元数据
+
+DateNode: 存储文件块数据，以及块数据的校验和
