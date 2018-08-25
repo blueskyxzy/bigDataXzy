@@ -1,0 +1,16 @@
+MapReduce
+
+2个阶段，Map和Reduce
+    Map并行处理输入数据
+    Reduce对Map结果进行汇总
+
+Shuffle连接
+    Map Task将数据写入本地磁盘
+    Reduce Task从每个Map Task上读取一份数据
+
+仅适合离线批处理
+    具有很好的容错性和扩展性
+    适合简单的批处理任务
+
+缺点明显
+    启动开销大，过多使用磁盘导致效率低下
