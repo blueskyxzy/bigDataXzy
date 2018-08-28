@@ -10,7 +10,3 @@ HDFS
 NameNode：存储元数据
 
 DateNode: 存储文件块数据，以及块数据的校验和
-
-
-
-
