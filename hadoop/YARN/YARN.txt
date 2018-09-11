@@ -1,0 +1,10 @@
+YARN
+
+hadoop 操作系统
+Data 操作系统（分配资源）
+
+Container （资源的隔离）
+ResourceManager
+    整个集群资源的管理和调度
+NodeManager
+    管理每个节点的资源和调度
