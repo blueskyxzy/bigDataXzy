@@ -1,5 +1,7 @@
 Hadoop Distributed File System
 
+windows用的是NTFS
+
 HDFS
     存储海量数据
     分布式
@@ -7,6 +9,8 @@ HDFS
         副本数据
     数据以block的方式存储
 
-NameNode：存储元数据
+NameNode：存储元数据，命名空间namespace
 
 DateNode: 存储文件块数据，以及块数据的校验和
+
+SecondaryNameNode: 辅助NameNode工作，合并两个文件（定时周期性）
