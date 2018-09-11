@@ -17,7 +17,7 @@ Shuffle连接
 缺点明显
     启动开销大，过多使用磁盘导致效率低下
 
-input -> map -> reduce -> output
+input -> map -> shuffle -> reduce -> output
 
 运行模式：
     本地模式
