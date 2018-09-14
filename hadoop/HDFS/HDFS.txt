@@ -31,3 +31,8 @@ DateNode: 存储文件块数据，以及块数据的校验和
 
 SecondaryNameNode: 辅助NameNode工作，合并两个文件（定时周期性）
 
+Shell命令：
+bin/hdfs dfs
+bin/hdfs dfs -D
+bin/hdfs dfsadmin -report
+安全模式bin/hdfs dfsadmin -safemode
