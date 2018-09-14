@@ -18,3 +18,10 @@ NameNode：存储元数据，命名空间namespace
 DateNode: 存储文件块数据，以及块数据的校验和
 
 SecondaryNameNode: 辅助NameNode工作，合并两个文件（定时周期性）
+
+
+nameNode负责文件元数据的操作，dataNode负责处理文件内容的读写请求。
+副本存放在哪些DataNode由NameNode控制，读取文件时NameNode尽量让用户先读取最近的副本。
+NameNode管理数据块的复制，周期性地从集群的每个dataNode接收心跳信号和块状态报告，
+接收到心跳说明dataNode节点正常工作，块状态报告包含一个该dataNode上所有数据块的列表
+
