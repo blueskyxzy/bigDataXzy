@@ -14,14 +14,20 @@ HDFS
 文件存取服务
 
 NameNode：存储元数据，命名空间namespace
+    nameNode是主节点，存储文件的元数据，包括文件名，文件目录结构，文件属性（生成时间，副本数，文件权限），每个文件的块列表以及块所在的dataNode。
+    nameNode负责文件元数据的操作，dataNode负责处理文件内容的读写请求。
+    副本存放在哪些DataNode由NameNode控制，读取文件时NameNode尽量让用户先读取最近的副本。
+    NameNode管理数据块的复制，周期性地从集群的每个dataNode接收心跳信号和块状态报告，
+    接收到心跳说明dataNode节点正常工作，块状态报告包含一个该dataNode上所有数据块的列表。
 
 DateNode: 存储文件块数据，以及块数据的校验和
+    一个数据块在dataNode以文件存储在磁盘上，包括两个文件，一个是数据本身，一个是元数据包括数据块的长度，块数据的校验以及时间戳
+        /data/tmp/dfs存的就是dataNode在本地磁盘存储的目录
+        /dfs/data/current/BP..../current/finalized存储的就是这两种文件
+    dataNode启动后向NameNode注册，周期性上报所有块信息。
+    心跳每3s发一次，返回nameNode给dataNode的命令。超过10分钟没收到心跳认为不可用
+    文件分成块（默认是128M）。每个快有多个副本存储在多个不同机器上，默认副本是3
+    当文件创建，写入和关闭后不能修改文件内容，但能追加
 
 SecondaryNameNode: 辅助NameNode工作，合并两个文件（定时周期性）
-
-
-nameNode负责文件元数据的操作，dataNode负责处理文件内容的读写请求。
-副本存放在哪些DataNode由NameNode控制，读取文件时NameNode尽量让用户先读取最近的副本。
-NameNode管理数据块的复制，周期性地从集群的每个dataNode接收心跳信号和块状态报告，
-接收到心跳说明dataNode节点正常工作，块状态报告包含一个该dataNode上所有数据块的列表
 
