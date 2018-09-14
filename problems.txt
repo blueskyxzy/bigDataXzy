@@ -1,3 +1,15 @@
-命令报错：
+1.命令报错：
 WARNING: log4j.properties is not found. HADOOP_CONF_DIR may be incomplete.
 ERROR: Invalid HADOOP_COMMON_HOME
+
+2.NameNode -format格式化失败
+读取core.site.xml,配置错误
+hostname和IP地址的映射
+
+3.NameNode启动失败
+查看logs日志文件
+more ***.log
+
+yarn的history查看历史服务器
+
+
