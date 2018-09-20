@@ -38,5 +38,5 @@ bin/hdfs dfsadmin -report
 安全模式bin/hdfs dfsadmin -safemode
 
 数据损坏（corruption）处理
-当DataNode读取block的时候，它会计算checksum,如果计算后的checksum，与block创建时值不一样，说明该block意见损坏。Client读取其他DN上的block。NameNode标记该块已经损坏，然后复制block达到预期设置的文件备份数。
-DataNode在其文件创建后三周验证其checksum
+    当DataNode读取block的时候，它会计算checksum,如果计算后的checksum，与block创建时值不一样，说明该block意见损坏。Client读取其他DN上的block。NameNode标记该块已经损坏，然后复制block达到预期设置的文件备份数。
+    DataNode在其文件创建后三周验证其checksum
